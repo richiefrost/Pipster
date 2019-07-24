@@ -1,5 +1,7 @@
 import os, requests, time
 from xml.etree import ElementTree
+import json
+from pydub import AudioSegment
 
 class TextToSpeech(object):
     def __init__(self, subscription_key, token_url, api_url):
@@ -44,7 +46,9 @@ class TextToSpeech(object):
         xml_body.set('{http://www.w3.org/XML/1998/namespace}lang', 'en-us')
         voice = ElementTree.SubElement(xml_body, 'voice')
         voice.set('{http://www.w3.org/XML/1998/namespace}lang', 'en-US')
-        voice.set('name', 'en-US-Guy24kRUS') # Short name for 'Microsoft Server Speech Text to Speech Voice (en-US, Guy24KRUS)'
+
+        voice_alias = "en-US-JessaNeural"
+        voice.set('name', voice_alias) # Short name for 'Microsoft Server Speech Text to Speech Voice
         voice.text = text
         body = ElementTree.tostring(xml_body)
 
@@ -58,6 +62,11 @@ class TextToSpeech(object):
             if response.status_code == 200:
                 with open(save_location, 'wb') as audio_fp:
                     audio_fp.write(response.content)
+                    
+                    # Need to save as mp3 so that iOS can play it
+                    _wav = AudioSegment.from_wav(save_location)
+                    _wav.export(save_location + '.mp3', format='mp3')
+
                     print('\naudio clip saved successfully to {}'.format(save_location))
             else:
                 print("\nStatus code: " + str(response.status_code) + "\nSomething went wrong. Check your subscription key and headers.\n")
@@ -67,3 +76,30 @@ class TextToSpeech(object):
             print('URL: {}'.format(constructed_url))
             print('Headers: {}'.format(headers))
             raise(e)
+            
+
+if __name__ == '__main__':
+    import sys
+    import argparse
+
+    with open('config.json') as config_fp:
+        config = json.loads(config_fp.read())
+    
+    try:
+        subscription_key = config['subscription-key']
+        token_url = config['token-url']
+        api_url = config['api-url']
+    except:
+        print('Element missing from config')
+        sys.exit(1)
+
+    parser = argparse.ArgumentParser(description='Translate text to speech.')
+    parser.add_argument('--infile', help='The filename containing the text to translate', required=True)
+    parser.add_argument('--outfile', help='What to save the file as, under the media/ directory', required=True)
+    args = parser.parse_args()
+    
+    app = TextToSpeech(subscription_key, token_url, api_url)
+
+    with open(args.infile, encoding='utf-8') as text_fp:
+        text = text_fp.read()
+    app.convert(text, args.outfile)
