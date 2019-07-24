@@ -8,11 +8,10 @@ Upload any text file and Pipster takes care of the rest. You'll get a link to li
 If you're developing on Windows, it's highly recommended to use the Docker image, since the paths and dependencies used are in Unix format.
 
 Prerequisites:
-1) An Azure Cognitize Services (Speech Services) instance. You can get one [here](https://portal.azure.com)
+1) An Azure Cognitize Services (Speech Services) instance. You can get one <a href="https://azure.microsoft.com/en-us/services/cognitive-services/text-to-speech/" target="_blank">here</a>
 2) Copy `config-example.json` to `config.json` and fill in your own values:
     - `subscription-key`: Also known as "KEY 1" from your Cognitive Services resource's Keys page
-    - `token-url`: Available under "Quick Start, step 2b" from your Cognitive Services resource's Quick Start page
-    - `api-url`: The URL to which text to speech requests will be sent. This depends on your resource's region, and you can find a list of valid values <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/rest-text-to-speech#standard-and-neural-voices" target="_blank">here</a>
+    - `resource-region`: The region where your Cognitive Services Text to Speech instance lives, i.e. westus2
 
 ## Setup:
 `docker build -t pipster .`

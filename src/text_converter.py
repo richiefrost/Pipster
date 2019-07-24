@@ -3,10 +3,10 @@ from xml.etree import ElementTree
 import json
 
 class TextToSpeech(object):
-    def __init__(self, subscription_key, token_url, api_url):
+    def __init__(self, subscription_key, resource_region):
         self.subscription_key = subscription_key
-        self.token_url = token_url
-        self.api_url = api_url
+        self.token_url = self.__get_token_url(resource_region)
+        self.api_url = self.__get_api_url(resource_region)
         self.access_token = None
         self.__get_token()
 
@@ -31,6 +31,10 @@ class TextToSpeech(object):
     def __get_token_url(self, region):
         # TODO: Support more regions
         return 'https://westus2.api.cognitive.microsoft.com/sts/v1.0/issueToken'
+
+    def __get_api_url(self, region):
+        # TODO: Support more regions
+        return "https://westus2.tts.speech.microsoft.com/cognitiveservices/v1"
 
     def convert(self, text, save_location):
         url = self.api_url
@@ -87,8 +91,7 @@ if __name__ == '__main__':
     
     try:
         subscription_key = config['subscription-key']
-        token_url = config['token-url']
-        api_url = config['api-url']
+        resource_region = config['resource-region']
     except:
         print('Element missing from config')
         sys.exit(1)
@@ -98,7 +101,7 @@ if __name__ == '__main__':
     parser.add_argument('--outfile', help='What to save the file as, under the media/ directory', required=True)
     args = parser.parse_args()
     
-    app = TextToSpeech(subscription_key, token_url, api_url)
+    app = TextToSpeech(subscription_key, resource_region)
 
     with open(args.infile, encoding='utf-8') as text_fp:
         text = text_fp.read()
