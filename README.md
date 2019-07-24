@@ -28,8 +28,6 @@ These use the command line to open a browser to the right place, but you could r
 
 Windows:
 ``` bash
-git clone https://github.com/richiefrost/Pipster.git pipster
-cd pipster
 docker build -t pipster .
 docker run -p 5000:5000 pipster 
 curl -F "file=@%cd%\test.txt" localhost:5000/convert
@@ -38,8 +36,6 @@ explorer http://localhost:5000/listen/test
 
 OSX:
 ``` bash
-git clone https://github.com/richiefrost/Pipster.git pipster
-cd pipster
 docker build -t pipster .
 docker run -p 5000:5000 pipster
 curl -F "file=@$(pwd)/test.txt" localhost:5000/convert
