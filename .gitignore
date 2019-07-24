@@ -2,7 +2,15 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Miscellaneous stuff specific to this project
 scratch.ipynb
+config.json
+
+# Media/text storage for this project
+src/library.json
+src/text
+src/media
 
 # C extensions
 *.so
@@ -103,3 +111,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Files/folders specific to development
+.vscode

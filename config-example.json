@@ -1,0 +1,5 @@
+{
+    "subscription-key": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "token-url": "https://your-instance-name.cognitiveservices.azure.com/sts/v1.0/issuetoken",
+    "api-url": "https://your-region.tts.speech.microsoft.com/cognitiveservices/v1"
+}

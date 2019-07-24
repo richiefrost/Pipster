@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 COPY ./src /app
 COPY requirements.txt /
-COPY config.json /app
+COPY config.json /
 
 ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8

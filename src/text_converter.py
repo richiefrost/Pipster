@@ -1,14 +1,12 @@
 import os, requests, time
 from xml.etree import ElementTree
 import json
-from pydub import AudioSegment
 
 class TextToSpeech(object):
     def __init__(self, subscription_key, token_url, api_url):
         self.subscription_key = subscription_key
         self.token_url = token_url
         self.api_url = api_url
-        self.timestr = time.strftime("%Y%m%d-%H%M")
         self.access_token = None
         self.__get_token()
 
@@ -30,18 +28,20 @@ class TextToSpeech(object):
             print('Problem happened while getting access token:')
             print(e)
 
+    def __get_token_url(self, region):
+        # TODO: Support more regions
+        return 'https://westus2.api.cognitive.microsoft.com/sts/v1.0/issueToken'
+
     def convert(self, text, save_location):
-        print('Saving audio')
-        base_url = self.api_url
-        path = 'cognitiveservices/v1'
-        user_agent = 'tts-api'
-        constructed_url = base_url + path
+        url = self.api_url
+        
         headers = {
             'Authorization': 'Bearer ' + self.access_token,
             'Content-Type': 'application/ssml+xml',
-            'X-Microsoft-OutputFormat': 'riff-24khz-16bit-mono-pcm',
-            'User-Agent': user_agent
+            'X-Microsoft-OutputFormat': 'audio-24khz-96kbitrate-mono-mp3',
+            'User-Agent': 'tts-api'
         }
+
         xml_body = ElementTree.Element('speak', version='1.0')
         xml_body.set('{http://www.w3.org/XML/1998/namespace}lang', 'en-us')
         voice = ElementTree.SubElement(xml_body, 'voice')
@@ -53,7 +53,7 @@ class TextToSpeech(object):
         body = ElementTree.tostring(xml_body)
 
         try:
-            response = requests.post(constructed_url, headers=headers, data=body)
+            response = requests.post(url, headers=headers, data=body)
             '''
             If a success response is returned, then the binary audio is written
             to file in your working directory. It is prefaced by sample and
@@ -64,8 +64,8 @@ class TextToSpeech(object):
                     audio_fp.write(response.content)
                     
                     # Need to save as mp3 so that iOS can play it
-                    _wav = AudioSegment.from_wav(save_location)
-                    _wav.export(save_location + '.mp3', format='mp3')
+                    #_wav = AudioSegment.from_wav(save_location)
+                    #_wav.export(save_location + '.mp3', format='mp3')
 
                     print('\naudio clip saved successfully to {}'.format(save_location))
             else:
@@ -73,7 +73,7 @@ class TextToSpeech(object):
         except Exception as e:
             print('Requests failed')
             print('Method: Post')
-            print('URL: {}'.format(constructed_url))
+            print('URL: {}'.format(url))
             print('Headers: {}'.format(headers))
             raise(e)
             
@@ -82,7 +82,7 @@ if __name__ == '__main__':
     import sys
     import argparse
 
-    with open('config.json') as config_fp:
+    with open('../config.json') as config_fp:
         config = json.loads(config_fp.read())
     
     try:
