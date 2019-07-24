@@ -7,7 +7,7 @@ Upload any text file and Pipster takes care of the rest. You'll get a link to li
 #### Note:
 If you're developing on Windows, it's highly recommended to use the Docker image, since the paths and dependencies used are in Unix format.
 
-Prerequisites:
+## Prerequisites:
 1) An Azure Cognitize Services (Speech Services) instance. You can get one [here](https://portal.azure.com)
 2) Copy `config-example.json` to `config.json` and fill in your own values:
     - `subscription-key`: Also known as "KEY 1" from your Cognitive Services resource's Keys page
