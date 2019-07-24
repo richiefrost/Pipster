@@ -12,11 +12,6 @@ src/library.json
 src/text
 src/media
 
-# Windows-specific for this project
-src\library.json
-src\text
-src\media
-
 # C extensions
 *.so
 
