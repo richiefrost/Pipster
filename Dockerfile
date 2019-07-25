@@ -11,4 +11,5 @@ RUN apt-get update && \
     apt-get install ffmpeg python3-pip python3 -y && \
     pip3 install -r requirements.txt
 
-ENTRYPOINT ["cd", "/app", "&&", "python3", "api.py"]
+WORKDIR /app
+ENTRYPOINT ["python3", "api.py"]
