@@ -1,6 +1,5 @@
 from flask import Flask, Response, request
 from werkzeug import secure_filename
-from text_converter import TextToSpeech
 import json
 import subprocess
 import os
