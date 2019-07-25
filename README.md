@@ -24,7 +24,7 @@ If you're developing on Windows, it's highly recommended to use the Docker image
 2) After waiting a moment, open your browswer to `localhost:5000/listen/your-book-name`, where "your-book-name" is the name of your file without the extension
 
 ## End-to-end examples 
-These use the command line to open a browser to the right place, but you could really just navigate there yourself.
+These use the command line to open a browser to the right place, but you could really just navigate there yourself. These will work once you've completed the prerequisites.
 
 Windows:
 ``` bash
@@ -37,7 +37,7 @@ explorer http://localhost:5000/listen/test
 OSX:
 ``` bash
 docker build -t pipster .
-docker run -p 5000:5000 pipster
+docker run -p 5000:5000 pipster &
 curl -F "file=@$(pwd)/test.txt" localhost:5000/convert
 open http://localhost:5000/listen/test
 ```
