@@ -1,5 +1,5 @@
 from flask import Flask, Response, request
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 import json
 import subprocess
 import os
@@ -42,7 +42,7 @@ def convert():
     with open('library.json', 'w+') as library_fp:
         library_fp.write(json.dumps(library))
 
-    return 'Book processing, check back in a moment at /listen/{}'.format(book_name)
+    return 'Book processing, check back in a moment at /listen/{}\n'.format(book_name)
 
 if __name__ == '__main__':
     # Start with a default library if none exists yet
