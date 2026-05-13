@@ -8,7 +8,7 @@ Upload any text file and Pipster takes care of the rest. You'll get a link to li
 If you're developing on Windows, it's highly recommended to use the Docker image, since the paths and dependencies used are in Unix format.
 
 ## Prerequisites:
-1) An Azure Cognitize Services (Speech Services) instance. You can get one <a href="https://azure.microsoft.com/en-us/services/cognitive-services/text-to-speech/" target="_blank">here</a>
+1) An Azure Cognitive Services (Speech Services) instance. You can get one <a href="https://azure.microsoft.com/en-us/services/cognitive-services/text-to-speech/" target="_blank">here</a>
 2) Copy `config-example.json` to `config.json` and fill in your own values:
     - `subscription-key`: Also known as "KEY 1" from your Cognitive Services resource's Keys page
     - `resource-region`: The region where your Cognitive Services Text to Speech instance lives, i.e. westus2
@@ -21,7 +21,7 @@ If you're developing on Windows, it's highly recommended to use the Docker image
 
 ## Usage:
 1) Upload a file to `localhost:5000/convert`
-2) After waiting a moment, open your browswer to `localhost:5000/listen/your-book-name`, where "your-book-name" is the name of your file without the extension
+2) After waiting a moment, open your browser to `localhost:5000/listen/your-book-name`, where "your-book-name" is the name of your file without the extension
 
 ## End-to-end examples 
 These use the command line to open a browser to the right place, but you could really just navigate there yourself. These will work once you've completed the prerequisites.
